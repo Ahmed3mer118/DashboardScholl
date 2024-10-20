@@ -68,6 +68,10 @@
     "phone": {
       "type": "string",
       "required": true
+    },
+    "group": {
+      "type": "date",
+      "required": true
     }
   }
 }

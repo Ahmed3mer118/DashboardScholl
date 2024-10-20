@@ -771,6 +771,7 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       'plugin::users-permissions.role'
     >;
     phone: Attribute.String & Attribute.Required;
+    group: Attribute.Date & Attribute.Required;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -788,35 +789,29 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
   };
 }
 
-export interface ApiDataStudentDataStudent extends Schema.CollectionType {
-  collectionName: 'data_students';
+export interface ApiAttendanceAttendance extends Schema.CollectionType {
+  collectionName: 'attendances';
   info: {
-    singularName: 'data-student';
-    pluralName: 'data-students';
-    displayName: 'data-student';
-    description: '';
+    singularName: 'attendance';
+    pluralName: 'attendances';
+    displayName: 'attendance';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
-    name: Attribute.String & Attribute.Required;
-    email: Attribute.Email & Attribute.Required;
-    password: Attribute.Password & Attribute.Required;
-    confirmPassword: Attribute.Password;
-    number: Attribute.String & Attribute.Required;
-    group: Attribute.Date & Attribute.Required;
+    attendance: Attribute.String;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
-      'api::data-student.data-student',
+      'api::attendance.attendance',
       'oneToOne',
       'admin::user'
     > &
       Attribute.Private;
     updatedBy: Attribute.Relation<
-      'api::data-student.data-student',
+      'api::attendance.attendance',
       'oneToOne',
       'admin::user'
     > &
@@ -904,7 +899,7 @@ export interface ApiLoginLogin extends Schema.CollectionType {
   };
   attributes: {
     email: Attribute.Email & Attribute.Required;
-    password: Attribute.Password & Attribute.Required;
+    password: Attribute.String & Attribute.Required;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -916,6 +911,38 @@ export interface ApiLoginLogin extends Schema.CollectionType {
       Attribute.Private;
     updatedBy: Attribute.Relation<
       'api::login.login',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiStudentAttendanceStudentAttendance
+  extends Schema.CollectionType {
+  collectionName: 'student_attendances';
+  info: {
+    singularName: 'student-attendance';
+    pluralName: 'student-attendances';
+    displayName: 'student-attendance';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    name: Attribute.String & Attribute.Required;
+    group: Attribute.Date;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::student-attendance.student-attendance',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::student-attendance.student-attendance',
       'oneToOne',
       'admin::user'
     > &
@@ -974,10 +1001,11 @@ declare module '@strapi/types' {
       'plugin::users-permissions.permission': PluginUsersPermissionsPermission;
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
-      'api::data-student.data-student': ApiDataStudentDataStudent;
+      'api::attendance.attendance': ApiAttendanceAttendance;
       'api::group.group': ApiGroupGroup;
       'api::lectures.lectures': ApiLecturesLectures;
       'api::login.login': ApiLoginLogin;
+      'api::student-attendance.student-attendance': ApiStudentAttendanceStudentAttendance;
       'api::students.students': ApiStudentsStudents;
     }
   }

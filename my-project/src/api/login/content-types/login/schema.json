@@ -17,7 +17,7 @@
       "required": true
     },
     "password": {
-      "type": "password",
+      "type": "string",
       "required": true
     }
   }

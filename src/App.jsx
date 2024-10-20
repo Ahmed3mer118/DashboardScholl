@@ -6,7 +6,7 @@ import { HelmetProvider } from "react-helmet-async";
 // Dashboard
 import Dashboard from "./DashboardAdmin/Dashboard/Dashboard";
 import Error from "./DashboardAdmin/Error";
-import Login from "./DashboardAdmin/Dashboard//Login";
+import Login from "./DashboardAdmin/Dashboard/Login";
 import DashboardIndex from "./DashboardAdmin/Dashboard//DashboardIndex";
 // Group
 import NewGroup from "./DashboardAdmin/Gruops/NewGroup";
@@ -24,9 +24,11 @@ import UpdateLecture from "./DashboardAdmin/Lectures/UpdateLecture";
 import PrivateRoute from "./DashboardAdmin/PrivateRoute";
 // user
 import Register from "./DashboardAdmin/Users/Register";
+import LoginUser from "./DashboardAdmin/Users/Login";
+import LectureQRCode from "./DashboardAdmin/Lectures/LectureQRCode";
+import FormQr from "./DashboardAdmin/Users/FormQr";
 
 const helmetContext = {};
-
 
 function App() {
   var [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -34,13 +36,13 @@ function App() {
     {
       path: "/login/admin",
       // element: <Login setIsLoggedIn={setIsLoggedIn} />,
-      element:<Login />
+      element: <Login />,
     },
     {
       path: "/admin",
       // element: <PrivateRoute element={<Dashboard />} isLoggedIn={isLoggedIn} />,
-      element:<Dashboard />,
-  
+      element: <Dashboard />,
+
       children: [
         {
           index: true,
@@ -59,6 +61,10 @@ function App() {
           element: <AllStudents />,
         },
         {
+          path: "/admin/qr",
+          element: <LectureQRCode />,
+        },
+        {
           path: "/admin/:groupId",
           element: <DetailsGroup />,
           children: [
@@ -73,26 +79,36 @@ function App() {
             {
               path: "/admin/:groupId/lectures",
               element: <Lectures />,
-             
             },
             {
-              path:"/admin/:groupId/lectures/update/:lectureId",
-              element: <UpdateLecture />
-            }
+              path: "/admin/:groupId/lectures/update/:lectureId",
+              element: <UpdateLecture />,
+            },
           ],
         },
       ],
     },
+    // user
     {
-      path:"/",
-      element:<Register />
+      path: "/Register",
+      element: <Register />,
     },
+    {
+      path: "/login",
+      element: <LoginUser />,
+    },
+    {
+      path: "/attendance?/:id",
+      element: <FormQr />,
+    },
+ 
+ 
     {
       path: "*",
       element: <Error />,
     },
   ]);
-  
+
   return (
     <HelmetProvider context={helmetContext}>
       <RouterProvider router={router} />

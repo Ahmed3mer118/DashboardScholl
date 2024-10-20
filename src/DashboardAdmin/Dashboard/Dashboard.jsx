@@ -144,12 +144,13 @@ function Dashboard() {
             </ul>
           </li>
           <li>
-            <button
-              className="btn btn-warning text-dark dropdown-toggle  w-100 text-start "
-              onClick={() => handleOpen("attecndace")}
-            >
-              Attendace
-            </button>
+            {/* <button
+              className="btn btn-warning text-dark   w-100 text-start "
+              // onClick={() => handleOpen("attecndace")}
+            > */}
+              <Link to={"/admin/qr"} className="btn btn-warning text-dark   w-100 text-start ">Attendance</Link>
+              
+            {/* </button> */}
             <ul className={openTag.attecndace ? "ulShow" : ""}></ul>
           </li>
           <li>

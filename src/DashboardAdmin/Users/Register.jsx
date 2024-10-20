@@ -1,37 +1,39 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./register.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import axios from "axios";
 function Register() {
+  const navigate = useNavigate();
   const [register, setRegister] = useState({
     name: "",
     email: "",
     password: "",
-    confPassword: "",
+  
     number: "",
-    group: "",
+    dataGroup: "",
   });
   const handleRegister = (e) => {
     e.preventDefault();
-    if (register.password === register.confPassword) {
-      axios
-        .post(
-          "http://localhost:1337/api/data-students",
-          { data: register },
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        )
-        .then(() => {
-          toast.success("Hello " + register.name);
-        });
-    } else {
-      toast.error("Password is not confirm");
-    }
+
+    axios
+      .post("http://localhost:8000/api/users/register",   { 
+        email: register.email,
+        username:register.name,
+        password: register.password,
+        phone:register.number,
+        group:register.dataGroup
+      })
+      .then(() => {
+        toast.success("Hello " + register.name);
+        // setTimeout(() => {
+        //   navigate("/login");
+        // }, 2000);
+      })
+      .catch((err) => console.log("Error:" + err));
   };
+
+
   return (
     <>
       <ToastContainer />
@@ -42,14 +44,14 @@ function Register() {
             type="text"
             placeholder="Name"
             className="form-control border rounded mt-3 "
-            required
+            // required
             onChange={(e) => setRegister({ ...register, name: e.target.value })}
           />
           <input
             type="email"
             placeholder="Email"
             className="form-control border rounded mt-3 "
-            required
+            // required
             onChange={(e) =>
               setRegister({ ...register, email: e.target.value })
             }
@@ -63,20 +65,12 @@ function Register() {
               setRegister({ ...register, password: e.target.value })
             }
           />
-          <input
-            type="password"
-            placeholder="Confirm  password"
-            className="form-control border rounded mt-3 "
-            required
-            onChange={(e) =>
-              setRegister({ ...register, confPassword: e.target.value })
-            }
-          />
+       
           <input
             type="text"
             placeholder="number"
             className="form-control border rounded mt-3 "
-            required
+            // required
             onChange={(e) =>
               setRegister({ ...register, number: e.target.value })
             }
@@ -84,9 +78,9 @@ function Register() {
           <input
             type="date"
             className="form-control border rounded mt-3 "
-            required
+            // required
             onChange={(e) =>
-              setRegister({ ...register, group: e.target.value })
+              setRegister({ ...register, dataGroup: e.target.value })
             }
           />
           <div className="mt-2 p-2">
